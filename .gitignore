@@ -1,0 +1,38 @@
+# private configuration file, local to each machine
+prod_private.py
+
+# Python bytecode:
+*.py[co]
+
+# Packaging files:
+*.egg*
+
+# Editor temp files:
+*.swp
+*~
+
+# Sphinx docs:
+build
+
+# SQLite3 database files:
+*.db
+
+# Logs:
+*.log
+
+# Coverage tests
+.coverage
+
+# Public asset (static and media) files
+# Those files are either user generated (file uploads) or temporary
+# (generated with collectstatic)
+public/
+
+# Private uploaded files
+# Those files are user generated, but must no be served with the
+# web server
+private/
+
+TODO
+
+docs/_build
