@@ -2,6 +2,7 @@ import os
 from sys import path
 from os.path import basename
 from unipath import Path
+from logging.handlers import SysLogHandler
 
 
 DJANGO_ROOT = Path(__file__).ancestor(3)
@@ -116,4 +117,57 @@ PIPELINE_JS = {
         ),
         'output_filename': 'js/base.js',
     },
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[phase] %(levelname)s %(asctime)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+        # Send info messages to syslog
+        'syslog': {
+            'level': 'INFO',
+            'class': 'logging.handlers.SysLogHandler',
+            'facility': SysLogHandler.LOG_LOCAL2,
+            'address': '/dev/log',
+            'formatter': 'verbose',
+        },
+        'mail_admins': {
+            'level': 'WARNING',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+        # critical errors are logged to sentry
+        #'sentry': {
+        #    'level': 'ERROR',
+        #    'filters': ['require_debug_false'],
+        #    'class': 'raven.contrib.django.handlers.SentryHandler',
+        #},
+    },
+    'loggers': {
+        # This is the "catch all" logger
+        '': {
+            'handlers': ['console', 'syslog', 'mail_admins'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        # We have to redefine this. See
+        # http://stackoverflow.com/questions/20282521/django-request-logger-not-propagated-to-root
+        'django.request': {
+            'propagate': True,
+        },
+    }
 }
