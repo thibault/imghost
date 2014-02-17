@@ -32,11 +32,14 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = ()
 
-LOCAL_APPS = ()
+LOCAL_APPS = (
+    'images',
+)
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE_CLASSES = (
+    'pipeline.middleware.MinifyHTMLMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,3 +87,29 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_ROOT = PUBLIC_ROOT.child('media')
+
+TEMPLATE_DIRS = (
+    DJANGO_ROOT.child('templates'),
+)
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+PIPELINE_CSS = {
+    'base': {
+        'source_filenames': (
+            'css/bootstrap.css',
+            'css/project.css',
+        ),
+        'output_filename': 'css/base.css',
+    },
+}
+
+PIPELINE_JS = {
+    'base': {
+        'source_filenames': (
+            'js/jquery.js',
+            'js/bootstrap.js',
+        ),
+        'output_filename': 'js/base.js',
+    },
+}
