@@ -29,15 +29,24 @@ def upload(request):
 
 @render_to('list.html')
 def list(request):
-    pass
+    images = Image.objects.all()
+    form = UploadForm()
+
+    return {
+        'images': images,
+        'form': form,
+    }
 
 
 @render_to('detail.html')
 def detail(request, unique_key):
     image = get_object_or_404(Image, unique_key=unique_key)
-    full_url = request.build_absolute_uri(image.get_absolute_url())
+
+    file_url = request.build_absolute_uri(image.thumb_large.url)
+    page_url = request.build_absolute_uri(image.get_absolute_url())
 
     return {
         'image': image,
-        'full_url': full_url,
+        'file_url': file_url,
+        'page_url': page_url,
     }

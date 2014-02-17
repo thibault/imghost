@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="col-md-7">
-        <img src="{{ image.image.url }}" />
+        <img src="{{ image.thumb_large.url }}" />
     </div>
 
     <div class="col-md-5">
@@ -13,7 +13,8 @@
             <dt>Rst markup:</dt>
             <dd>
             <pre>
-figure:: {{ full_url }}
+figure:: {{ file_url }}
+    :target: {{ page_url }}
     :alt:
     :align: center
     :class: full</pre>
