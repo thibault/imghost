@@ -1,23 +1,15 @@
 from os.path import splitext
 import random
 import string
-import datetime
 
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from images.utils import create_thumb
 
-def upload_path(instance, filename):
-    date_path = datetime.datetime.today().strftime('%Y/%m')
-    basename, ext = splitext(filename)
-    unique_key = instance.get_unique_key()
 
-    return 'images/%s/%s%s' % (
-        date_path,
-        unique_key,
-        ext
-    )
+upload_path = 'images/%Y/%m/'
 
 
 class Image(models.Model):
@@ -31,6 +23,14 @@ class Image(models.Model):
         upload_to=upload_path,
         height_field='height',
         width_field='width')
+    thumb_small = models.ImageField(
+        _('Small thumbnail'),
+        blank=True,
+        upload_to=upload_path)
+    thumb_large = models.ImageField(
+        _('Large thumbnail'),
+        blank=True,
+        upload_to=upload_path)
     extension = models.CharField(
         _('Extension'),
         max_length=4,
@@ -63,6 +63,9 @@ class Image(models.Model):
         if not self.id:
             self.generate_unique_key()
             self.generate_extension()
+            self.generate_image_filename()
+
+        self.generate_thumbnails()
         super(Image, self).save(*args, **kwargs)
 
     def get_unique_key(self):
@@ -78,3 +81,16 @@ class Image(models.Model):
     def generate_extension(self):
         name, ext = splitext(self.image.url)
         self.extension = ext
+
+    def generate_image_filename(self):
+        image_name = '%s%s' % (self.unique_key, self.extension)
+        self.image.name = image_name
+
+    def generate_thumbnails(self):
+        name = '%s_s%s' % (self.unique_key, self.extension)
+        small_thumb = create_thumb(self.image, (150, 150))
+        self.thumb_small.save(name, small_thumb, save=False)
+
+        name = '%s_l%s' % (self.unique_key, self.extension)
+        large_thumb = create_thumb(self.image, (700, 400))
+        self.thumb_large.save(name, large_thumb, save=False)
