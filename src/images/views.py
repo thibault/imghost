@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from annoying.decorators import render_to
 
 from images.forms import UploadForm
@@ -33,4 +33,10 @@ def list(request):
 
 @render_to('detail.html')
 def detail(request, unique_key):
-    pass
+    image = get_object_or_404(Image, unique_key=unique_key)
+    full_url = request.build_absolute_uri(image.get_absolute_url())
+
+    return {
+        'image': image,
+        'full_url': full_url,
+    }

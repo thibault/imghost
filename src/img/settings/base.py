@@ -90,6 +90,7 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_ROOT = PUBLIC_ROOT.child('media')
+MEDIA_URL = '/media/'
 
 TEMPLATE_DIRS = (
     DJANGO_ROOT.child('templates'),
