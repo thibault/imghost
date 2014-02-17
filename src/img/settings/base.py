@@ -1,25 +1,19 @@
-"""
-Django settings for img project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
-"""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+from sys import path
+from os.path import basename, join, normpath
+from unipath import Path
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+DJANGO_ROOT = Path(__file__).ancestor(3)
+SITE_ROOT = DJANGO_ROOT.ancestor(1)
+SITE_NAME = basename(SITE_ROOT)
+CONFIGURATION_APP_ROOT = Path(__file__).ancestor(2)
+PUBLIC_ROOT = SITE_ROOT.child('public')
+path.append(DJANGO_ROOT)
+path.append(CONFIGURATION_APP_ROOT)
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7dcckq$8m2)mzwgu6&u#7+g4(3u#dl4k%9m9afpw+p-4!!!+ar'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 TEMPLATE_DEBUG = True
@@ -27,9 +21,7 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
-INSTALLED_APPS = (
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,6 +29,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
+
+THIRD_PARTY_APPS = (,)
+
+LOCAL_APPS = (,)
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -79,4 +77,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
+STATIC_ROOT = PUBLIC_ROOT.child('static')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    DJANGO_ROOT.child('static'),
+)
+
+MEDIA_ROOT = PUBLIC_ROOT.child('media')
