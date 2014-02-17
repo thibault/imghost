@@ -1,14 +1,14 @@
 import os
 from sys import path
-from os.path import basename, join, normpath
+from os.path import basename
 from unipath import Path
 
 
 DJANGO_ROOT = Path(__file__).ancestor(3)
-SITE_ROOT = DJANGO_ROOT.ancestor(1)
-SITE_NAME = basename(SITE_ROOT)
+PROJECT_ROOT = DJANGO_ROOT.ancestor(1)
+SITE_NAME = basename(PROJECT_ROOT)
 CONFIGURATION_APP_ROOT = Path(__file__).ancestor(2)
-PUBLIC_ROOT = SITE_ROOT.child('public')
+PUBLIC_ROOT = PROJECT_ROOT.child('public')
 path.append(DJANGO_ROOT)
 path.append(CONFIGURATION_APP_ROOT)
 
@@ -30,9 +30,9 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
 )
 
-THIRD_PARTY_APPS = (,)
+THIRD_PARTY_APPS = ()
 
-LOCAL_APPS = (,)
+LOCAL_APPS = ()
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -56,7 +56,7 @@ WSGI_APPLICATION = 'img.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(PROJECT_ROOT, 'img.sqlite3'),
     }
 }
 
