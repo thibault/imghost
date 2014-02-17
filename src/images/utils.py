@@ -22,6 +22,7 @@ def create_thumb(image, size):
     ext = ext[1:]
 
     thumbnail = Image.open(image.file.name)
+    thumbnail.seek(0)
     thumbnail.thumbnail(size, Image.ANTIALIAS)
 
     tmp_file = StringIO()

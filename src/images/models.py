@@ -52,6 +52,7 @@ class Image(models.Model):
     class Meta:
         verbose_name = _('Image')
         verbose_name_plural = _('Images')
+        ordering = ('-created_on',)
 
     def __unicode__(self):
         return '%s%s' % (self.unique_key, self.extension)
@@ -65,7 +66,6 @@ class Image(models.Model):
             self.generate_extension()
             self.generate_image_filename()
 
-        self.generate_thumbnails()
         super(Image, self).save(*args, **kwargs)
 
     def get_unique_key(self):
@@ -89,8 +89,8 @@ class Image(models.Model):
     def generate_thumbnails(self):
         name = '%s_s%s' % (self.unique_key, self.extension)
         small_thumb = create_thumb(self.image, (150, 150))
-        self.thumb_small.save(name, small_thumb, save=False)
+        self.thumb_small.save(name, small_thumb)
 
         name = '%s_l%s' % (self.unique_key, self.extension)
-        large_thumb = create_thumb(self.image, (700, 400))
-        self.thumb_large.save(name, large_thumb, save=False)
+        large_thumb = create_thumb(self.image, (700, 700))
+        self.thumb_large.save(name, large_thumb)
