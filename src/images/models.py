@@ -43,6 +43,7 @@ class Image(models.Model):
         default=0)
     source = models.URLField(
         _('Source'),
+        max_length=2048,
         null=True, blank=True)
 
     created_on = models.DateTimeField(
