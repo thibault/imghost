@@ -129,6 +129,8 @@ PIPELINE_JS = {
     },
 }
 
+PIPELINE_JS_COMPRESSOR = None
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
