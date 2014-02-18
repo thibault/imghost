@@ -18,6 +18,7 @@
     </div>
 
     <div class="col-md-4">
+    {% if request.user.is_authenticated %}
         <form method="POST" action="{% url 'upload' %}" enctype="multipart/form-data" role="form">
             {% csrf_token %}
 
@@ -26,6 +27,9 @@
             <input type="submit" value="{{ _('Send') }}" />
         </form>
     </div>
+    {% else %}
+        Salut !
+    {% endif %}
 </div>
 {% endblock %}
 

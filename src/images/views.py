@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, get_object_or_404
+from django.core.exceptions import PermissionDenied
 from annoying.decorators import render_to
 
 from images.forms import UploadForm
@@ -8,6 +9,10 @@ from images.models import Image
 
 @render_to('upload.html')
 def upload(request):
+
+    if not request.user.is_authenticated():
+        raise PermissionDenied('Sorry, only the keymaster can do this.')
+
     form = UploadForm(request.POST or None)
 
     if form.is_valid():
