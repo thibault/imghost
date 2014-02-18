@@ -33,7 +33,7 @@ class Image(models.Model):
         upload_to=upload_path)
     extension = models.CharField(
         _('Extension'),
-        max_length=4,
+        max_length=5,
         default='')
     height = models.PositiveIntegerField(
         _('Height'),
