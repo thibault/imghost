@@ -43,6 +43,7 @@ def detail(request, unique_key):
     image = get_object_or_404(Image, unique_key=unique_key)
 
     file_url = request.build_absolute_uri(image.thumb_large.url)
+    file_url = file_url.replace('/media/images/', '/i/')
     page_url = request.build_absolute_uri(image.get_absolute_url())
 
     return {
