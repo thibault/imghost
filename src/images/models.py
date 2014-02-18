@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from images.utils import create_thumb
 
 
-upload_path = 'images/%Y/%m/'
+upload_path = 'i/%Y/%m/'
 
 
 class Image(models.Model):
