@@ -3,13 +3,18 @@
 {% block content %}
 <div class="row">
     <div class="col-md-7">
-        <img src="{{ image.thumb_large.url }}" />
+        <figure>
+            <img src="{{ image.thumb_large.url }}" />
+            <figcaption>
+                From: <a href="{{ image.source }}">{{ image.source }}</a>
+            </figcaption>
+        </figure>
     </div>
 
     <div class="col-md-5">
         <dl id="img-urls">
             <dt>Full url:</dt>
-            <dd>{{ full_url }}</dd>
+            <dd>{{ page_url }}</dd>
             <dt>Rst markup:</dt>
             <dd>
             <pre>
