@@ -2,7 +2,7 @@ from os.path import splitext
 import requests
 from cStringIO import StringIO
 from os.path import basename
-from PIL import Image
+from PIL import Image, ImageOps
 
 from django.core.files.images import ImageFile
 
@@ -22,8 +22,11 @@ def create_thumb(image, size):
     ext = ext[1:]
 
     thumbnail = Image.open(image.file.name)
-    thumbnail.seek(0)
-    thumbnail.thumbnail(size, Image.ANTIALIAS)
+
+    if type(size) == tuple:
+        thumbnail = ImageOps.fit(thumbnail, size, Image.ANTIALIAS)
+    else:
+        thumbnail.thumbnail((size, size), Image.ANTIALIAS)
 
     tmp_file = StringIO()
     thumbnail.save(tmp_file, ext)
