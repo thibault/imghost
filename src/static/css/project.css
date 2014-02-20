@@ -6,3 +6,6 @@ dl#img-urls dd {
 }
 dl#img-urls pre {
 }
+.row .img {
+    margin-bottom: 1.5em;
+}
