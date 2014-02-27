@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load images %}
 
 {% block content %}
 <div class="row">
@@ -13,13 +14,19 @@
 
     <div class="col-md-5">
         <dl id="img-urls">
-            <dt>Full url:</dt>
-            <dd>{{ page_url }}</dd>
+            <dt>This page url:</dt>
+            <dd>{% full_url image.get_absolute_url %}</dd>
+            <dt>Original file:</dt>
+            <dd>{% full_url image.image.url %}</dd>
+            <dt>Large thumbnail:</dt>
+            <dd>{% full_url image.thumb_large.url %}</dd>
+            <dt>Small thumbnail:</dt>
+            <dd>{% full_url image.thumb_small.url %}</dd>
             <dt>Rst markup:</dt>
             <dd>
             <pre>
-.. figure:: {{ file_url }}
-    :target: {{ page_url }}
+.. figure:: {% full_url image.thumb_large.url %}
+    :target: {% full_url image.get_absolute_url %}
     :alt:
     :align: center
     :class: full</pre>
