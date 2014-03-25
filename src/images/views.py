@@ -23,7 +23,6 @@ def upload(request):
             image=image_file,
             source=url,
         )
-        image.generate_thumbnails()
 
         return redirect(image.get_absolute_url())
 

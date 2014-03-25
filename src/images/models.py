@@ -17,6 +17,7 @@ class Image(models.Model):
     unique_key = models.CharField(
         _('Unique key'),
         max_length=20,
+        blank=True,
         unique=True)
     image = models.ImageField(
         _('Image file'),
@@ -34,12 +35,15 @@ class Image(models.Model):
     extension = models.CharField(
         _('Extension'),
         max_length=5,
+        blank=True,
         default='')
     height = models.PositiveIntegerField(
         _('Height'),
+        blank=True,
         default=0)
     width = models.PositiveIntegerField(
         _('Width'),
+        blank=True,
         default=0)
     source = models.URLField(
         _('Source'),
@@ -66,8 +70,14 @@ class Image(models.Model):
             self.generate_unique_key()
             self.generate_extension()
             self.generate_image_filename()
+            generate_thumbs = True
+        else:
+            generate_thumbs = False
 
         super(Image, self).save(*args, **kwargs)
+
+        if generate_thumbs:
+            self.generate_thumbnails()
 
     def get_unique_key(self):
         if not self.unique_key:
