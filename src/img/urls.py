@@ -10,4 +10,5 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'images.views.list', name='image_list'),
     url(r'^images/', include('images.urls')),
+    url(r'^memes/', include('memes.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
