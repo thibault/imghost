@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
+{% load compressed %}
+
+{% block extra_js %}
+    {% compressed_js "meme" %}
+{% endblock extra_js %}
 
 {% block content %}
 <div class="row">
-    {{ image }}
+    <div class="col-md-7">
+        <img id="meme-image" src="{{ image.thumb_large.url }}" style="display: none"/>
+        <canvas id="meme-canvas"></canvas>
+    </div>
+    <div class="col-md-5">
+
+        <form id="meme-form" class="form">
+            <div class="form-group">
+                <label for="top-tex">Top text</label>
+                <input class="form-control" type="text" name="top-text" id="top-text" />
+            </div>
+            <div class="form-group">
+                <label for="bottom-tex">Bottom text</label>
+                <input class="form-control" type="text" name="bottom-text" id="bottom-text" />
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

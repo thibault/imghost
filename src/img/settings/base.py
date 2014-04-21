@@ -128,6 +128,12 @@ PIPELINE_JS = {
         ),
         'output_filename': 'js/base.js',
     },
+    'meme': {
+        'source_filenames': (
+            'js/meme.js',
+        ),
+        'output_filename': 'js/meme.js',
+    },
 }
 
 PIPELINE_JS_COMPRESSOR = None
