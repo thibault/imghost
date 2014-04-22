@@ -35,7 +35,7 @@ def upload(request):
 
 @render_to('list.html')
 def list(request):
-    images = Image.objects.all()
+    images = Image.objects.filter(is_meme=False)
     form = UploadForm()
 
     return {
@@ -48,6 +48,12 @@ def list(request):
 def detail(request, unique_key):
     image = get_object_or_404(Image, unique_key=unique_key)
 
+    if image.is_meme:
+        meme_key = image.source_image.unique_key
+    else:
+        meme_key = image.unique_key
+
     return {
         'image': image,
+        'meme_key': meme_key,
     }
