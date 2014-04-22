@@ -34,7 +34,30 @@
     :class: full</pre>
             </dd>
         </dl>
-        <a href="{% url 'meme' meme_key %}">Create a meme</a>
+        <a href="{% url 'meme' base_key %}">Create a meme</a>
+
+        {% if image.is_meme %}
+            —
+            <a href="{% url 'detail' base_key %}">Similar memes</a>
+        {% endif %}
     </div>
 </div>
+
+{% if has_memes %}
+<h2>{{ _('Related memes') }} </h2>
+
+<div class="row">
+    <div class="col-md-12">
+    {% for meme in related_memes %}
+        {% if meme.thumb_small %}
+        <div class="col-xs-6 col-md-2 img">
+            <a href="{% url 'detail' meme.unique_key %}">
+                <img src="{{ meme.thumb_small.url }}" />
+            </a>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
 {% endblock %}
