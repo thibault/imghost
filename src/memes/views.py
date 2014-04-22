@@ -1,5 +1,7 @@
 import mimetypes
-from django.shortcuts import get_object_or_404, redirect
+import json
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 from annoying.decorators import render_to
 
 from images.models import Image
@@ -22,7 +24,10 @@ def meme(request, unique_key):
             source_image=data['source_image']
         )
 
-        return redirect(img.get_absolute_url())
+        json_data = json.dumps({
+            'redirect': img.get_absolute_url()
+        })
+        return HttpResponse(json_data, content_type="application/x-javascript")
 
     return {
         'image': image,

@@ -66,7 +66,11 @@ jQuery(function($) {
         $.ajax({
             type: 'post',
             url: form.attr('action'),
-            data: data
+            data: data,
+            dataType: 'json',
+            success: function(data) {
+                window.location.href = data.redirect;
+            },
         });
     };
 
