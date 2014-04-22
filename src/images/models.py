@@ -50,6 +50,17 @@ class Image(models.Model):
         max_length=2048,
         null=True, blank=True)
 
+    is_meme = models.BooleanField(
+        _('Is meme'),
+        default=False
+    )
+    source_image = models.ForeignKey(
+        'images.Image',
+        verbose_name=_('Source image'),
+        related_name='related_memes',
+        null=True, blank=True,
+    )
+
     created_on = models.DateTimeField(
         _('Created on'),
         auto_now_add=True)
