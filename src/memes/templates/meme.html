@@ -13,15 +13,21 @@
     </div>
     <div class="col-md-5">
 
-        <form id="meme-form" class="form">
+        <form id="meme-form" class="form" method="POST" action="{% url 'meme' image.unique_key %}" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="top-tex">Top text</label>
-                <input class="form-control" type="text" name="top-text" id="top-text" />
+                <input class="form-control" type="text" name="top_text" id="top-text" />
             </div>
             <div class="form-group">
                 <label for="bottom-tex">Bottom text</label>
-                <input class="form-control" type="text" name="bottom-text" id="bottom-text" />
+                <input class="form-control" type="text" name="bottom_text" id="bottom-text" />
             </div>
+
+            <input type="hidden" name="source_image" value="{{ image.id }}" />
+            <input type="hidden" name="file" value="" />
+            <input type="hidden" name="mime" value="{{ mime }}" />
+            <input type="submit" value="Upload meme" class="btn btn-block btn-primary" />
         </form>
     </div>
 </div>

@@ -57,6 +57,20 @@ jQuery(function($) {
         writeBottomCaption(bottomText);
     };
 
+    var submitForm = function(event) {
+        event.preventDefault();
+
+        var fileInput = form.find('input[name=file]');
+        fileInput.val(imgCanvas[0].toDataURL());
+        var data = form.serialize();
+        $.ajax({
+            type: 'post',
+            url: form.attr('action'),
+            data: data
+        });
+    };
+
     initialize();
     form.on('keyup', updateMeme);
+    form.on('submit', submitForm);
 });

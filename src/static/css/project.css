@@ -9,3 +9,10 @@ dl#img-urls pre {
 .row .img {
     margin-bottom: 1.5em;
 }
+input[type=file].form-control {
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
