@@ -13,15 +13,17 @@ def upload(request):
     if not request.user.is_authenticated():
         raise PermissionDenied('Sorry, only the keymaster can do this.')
 
-    form = UploadForm(request.POST or None)
+    form = UploadForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
+
         url = form.cleaned_data['url']
-        image_file = download_image(url)
+        file = form.cleaned_data['file']
+        image_file = file if file else download_image(url)
 
         image = Image.objects.create(
             image=image_file,
-            source=url,
+            source=url or '',
         )
 
         return redirect(image.get_absolute_url())
