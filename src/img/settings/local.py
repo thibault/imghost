@@ -1,4 +1,3 @@
-import warnings
 from base import *  # noqa
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -25,7 +24,3 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
     'django.core.context_processors.request',
 )
-
-warnings.filterwarnings(
-    'error', r"DateTimeField .* received a naive datetime",
-    RuntimeWarning, r'django\.db\.models\.fields')

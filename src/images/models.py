@@ -3,6 +3,7 @@ import random
 import string
 
 from django.db import models
+from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
@@ -63,7 +64,7 @@ class Image(models.Model):
 
     created_on = models.DateTimeField(
         _('Created on'),
-        auto_now_add=True)
+        default=timezone.now)
 
     class Meta:
         verbose_name = _('Image')
