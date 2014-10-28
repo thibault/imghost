@@ -1,0 +1,9 @@
+[program:img]
+environment=DJANGO_SETTINGS_MODULE='img.settings.production'
+directory=/home/img/img/src
+command=/home/img/.virtualenvs/img/bin/python manage.py run_gunicorn localhost:8001
+user=img
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/supervisor/img.log
+redirect_stderr=true
