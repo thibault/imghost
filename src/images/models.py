@@ -20,6 +20,9 @@ class Image(models.Model):
         max_length=20,
         blank=True,
         unique=True)
+    hidden = models.BooleanField(
+        _('Is hidden'),
+        default=False)
     image = models.ImageField(
         _('Image file'),
         upload_to=upload_path,
