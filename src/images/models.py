@@ -118,5 +118,5 @@ class Image(models.Model):
         self.thumb_small.save(name, small_thumb)
 
         name = '%s_l%s' % (self.unique_key, self.extension)
-        large_thumb = create_thumb(self.image, 700)
+        large_thumb = create_thumb(self.image, 800)
         self.thumb_large.save(name, large_thumb)
