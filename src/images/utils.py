@@ -29,5 +29,5 @@ def create_thumb(image, size):
         thumbnail.thumbnail((size, size), Image.ANTIALIAS)
 
     tmp_file = StringIO()
-    thumbnail.save(tmp_file, ext)
+    thumbnail.save(tmp_file, ext, optimize=True)
     return ImageFile(tmp_file)
