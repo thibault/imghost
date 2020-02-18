@@ -16,6 +16,7 @@ gunicorn = "*"
 Django = "<3"
 Pillow = "*"
 Unipath = "*"
+django-environ = "*"
 
 [requires]
 python_version = "3.7"

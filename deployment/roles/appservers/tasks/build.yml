@@ -27,11 +27,11 @@
         group: "{{ user_name }}"
         recurse: true
 
-    # - name: Copy private production settings to the remote
-    #   when: project_env == "production"
-    #   copy:
-    #     src: ../../../src/{{ env_file }}
-    #     dest: "{{ django_root }}/{{ env_target }}"
+    - name: Copy private production settings to the remote
+      when: project_env == "production"
+      copy:
+        src: ../../../src/{{ env_file }}
+        dest: "{{ django_root }}/{{ env_target }}"
 
     - name: Install python packages
       shell: |

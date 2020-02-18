@@ -1,27 +1,30 @@
+import environ
+
 from .base import *  # noqa
-from django.core.exceptions import ImproperlyConfigured
-
-try:
-    import prod_private
-except ImportError:
-    raise ImproperlyConfigured("Create a prod_private.py file in settings")
-
-
-def get_prod_setting(setting):
-    """Get the setting or return exception """
-    try:
-        return getattr(prod_private, setting)
-    except AttributeError:
-        error_msg = "The %s setting is missing from prod settings" % setting
-        raise ImproperlyConfigured(error_msg)
-
+from .base import INSTALLED_APPS
 
 INSTALLED_APPS += (
-    'gunicorn',
+    'raven.contrib.django.raven_compat',
 )
 
-DATABASES = get_prod_setting('DATABASES')
+# Create a .env.production file in django's root
+environ.Env.read_env('.env.production')
+env = environ.Env()
 
-SECRET_KEY = get_prod_setting('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
-ALLOWED_HOSTS = get_prod_setting('ALLOWED_HOSTS')
+DATABASES = {
+    'default': env.db()
+}
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+
+INTERNAL_IPS = env.list('INTERNAL_IPS')
+
+RAVEN_CONFIG = {
+    'dsn': env.str('RAVEN_URL'),
+}
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
