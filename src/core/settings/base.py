@@ -3,6 +3,7 @@ from sys import path
 from os.path import basename
 from unipath import Path
 from logging.handlers import SysLogHandler
+import environ
 
 
 DJANGO_ROOT = Path(__file__).ancestor(3)
@@ -12,6 +13,11 @@ CONFIGURATION_APP_ROOT = Path(__file__).ancestor(2)
 PUBLIC_ROOT = PROJECT_ROOT.child('public')
 path.append(DJANGO_ROOT)
 path.append(CONFIGURATION_APP_ROOT)
+
+# Create a .env.production file in django's root
+environ.Env.read_env('.env.local')
+env = environ.Env()
+
 
 SECRET_KEY = '7dcckq$8m2)mzwgu6&u#7+g4(3u#dl4k%9m9afpw+p-4!!!+ar'
 
@@ -61,10 +67,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_ROOT, 'img.sqlite3'),
-    }
+    'default': env.db(default='psql://img:img@localhost/img')
 }
 
 # Internationalization
