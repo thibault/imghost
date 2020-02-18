@@ -4,7 +4,7 @@ import string
 
 from django.db import models
 from django.utils import timezone
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from images.utils import create_thumb
@@ -60,6 +60,7 @@ class Image(models.Model):
     )
     source_image = models.ForeignKey(
         'images.Image',
+        on_delete=models.PROTECT,
         verbose_name=_('Source image'),
         related_name='related_memes',
         null=True, blank=True,

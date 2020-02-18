@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+django-debug-toolbar = "*"
+
+[packages]
+django-annoying = "*"
+django-widget-tweaks = "*"
+requests = "*"
+django-pipeline = "*"
+gunicorn = "*"
+Django = "<3"
+Pillow = "*"
+Unipath = "*"
+
+[requires]
+python_version = "3.7"

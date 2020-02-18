@@ -1,0 +1,15 @@
+project_name: img
+user_name: img
+project_repo: git@git.miximum.fr:thibault/imghost.git
+install_root: /home/img
+project_root: "{{ install_root }}/{{ project_name }}"
+django_root: "{{ project_root }}/src"
+venv_root: "{{ install_root }}/.virtualenvs"
+venv_dir: "{{ venv_root }}/{{ project_name }}"
+pipfile: "{{ project_root }}/Pipfile.lock"
+bin_dir: "{{ venv_dir }}/bin"
+python_bin: "{{ bin_dir }}/python"
+pipenv_bin: "{{ bin_dir }}/pipenv"
+activate_bin: "{{ bin_dir }}/activate"
+gunicorn_bin: "{{ bin_dir }}/gunicorn"
+shell_prompt: PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '

@@ -1,5 +1,5 @@
 import re
-from cStringIO import StringIO
+from io import StringIO
 from django import forms
 from django.core.files.images import ImageFile
 

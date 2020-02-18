@@ -1,7 +1,8 @@
-from django.conf.urls import patterns, url
+from django.urls import path
+
+from memes import views
 
 
-urlpatterns = patterns(
-    'memes.views',
-    url(r'^(?P<unique_key>\w+)/$', 'meme', name='meme'),
-)
+urlpatterns = [
+    path('<slug:unique_key>/', views.meme, name='meme'),
+]

@@ -1,0 +1,30 @@
+---
+- name: Create user
+  user:
+    name: "{{ user_name }}"
+    state: present
+    password_lock: true
+    shell: /bin/bash
+    create_home: true
+    skeleton: /etc/skel/
+
+- name: Change owner
+  file:
+    path: "{{ install_root }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: Allow sudo_user to access Ansible's SSH_AUTH_SOCK
+  shell: >
+    setfacl -m {{ user_name }}:x  $(dirname "$SSH_AUTH_SOCK") ;
+    setfacl -m {{ user_name }}:rwx "$SSH_AUTH_SOCK"
+  changed_when: false
+
+- name: Make sure the django settings module env is set
+  lineinfile:
+    path: "{{ install_root }}/.bashrc"
+    state: present
+    regexp: "^export DJANGO_SETTINGS_MODULE"
+    line: "export DJANGO_SETTINGS_MODULE={{ django_settings }}"
+    insertafter: EOF
+

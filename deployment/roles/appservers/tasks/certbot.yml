@@ -1,0 +1,64 @@
+---
+- name: Ensure Nginx is stopped
+  service:
+    name: nginx
+    state: stopped
+
+- name: Generate certificate using Let's Encrypt (for production)
+  when: project_env == "production"
+  command:
+  args:
+    argv:
+      - certbot
+      - certonly
+      - --noninteractive
+      - --agree-tos
+      - --standalone
+      - --expand
+      - --keep
+      - --email
+      - "{{ certbot_admin_email }}"
+      - -d
+      - "{{ certbot_domains }}"
+      - --cert-name
+      - "{{ project_domain }}"
+
+- name: Install the certificate renewal cronjob
+  when: project_env == "production"
+  cron:
+    name: Daily certificate renewal
+    special_time: daily
+    job: "certbot renew --standalone --no-self-upgrade --pre-hook \"service nginx stop\" --post-hook \"service nginx start\""
+    state: present
+
+- name: Make sure certificate directory exists for OpenSSL
+  when: project_env == "local"
+  file:
+    path: "{{ cert_path }}"
+    state: directory
+
+- name: Generate a self-signed OpenSSL certificate (dev only)
+  when: project_env == "local"
+  command:
+  args:
+    creates: "{{ cert_path }}/fullchain.pem"
+    argv:
+      - openssl
+      - req
+      - -x509
+      - -newkey
+      - rsa:2048
+      - -nodes
+      - -out
+      - "{{ cert_path }}/fullchain.pem"
+      - -keyout
+      - "{{ cert_path }}/privkey.pem"
+      - -subj
+      - "/CN={{ project_domain }}"
+      - -days
+      - "1024"
+
+- name: Ensure Nginx is running
+  service:
+    name: nginx
+    state: started

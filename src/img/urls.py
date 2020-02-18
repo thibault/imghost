@@ -1,14 +1,15 @@
-from django.conf.urls import patterns, include, url
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-
 from django.contrib import admin
+
+from images.views import list as view_list
+
 admin.autodiscover()
 
-urlpatterns = patterns(
-    '',
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'images.views.list', name='image_list'),
-    url(r'^images/', include('images.urls')),
-    url(r'^memes/', include('memes.urls')),
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', view_list, name='image_list'),
+    path('images/', include('images.urls')),
+    path('memes/', include('memes.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

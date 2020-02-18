@@ -1,6 +1,6 @@
 from os.path import splitext
 import requests
-from cStringIO import StringIO
+from io import StringIO
 from os.path import basename
 from PIL import Image, ImageOps
 

@@ -1,0 +1,14 @@
+---
+- name: Create database user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ user_name }}"
+    password: "{{ user_name }}"
+
+- name: Create postgres Database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ project_name }}"
+    owner: "{{ user_name }}"

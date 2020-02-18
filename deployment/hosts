@@ -1,0 +1,9 @@
+[local]
+img.local
+
+[prod]
+img.new
+
+[img:children]
+local
+prod

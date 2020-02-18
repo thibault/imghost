@@ -1,8 +1,9 @@
-from django.conf.urls import patterns, url
+from django.urls import path
+
+from images import views
 
 
-urlpatterns = patterns(
-    'images.views',
-    url(r'^upload/$', 'upload', name='upload'),
-    url(r'^(?P<unique_key>\w+)/$', 'detail', name='detail'),
-)
+urlpatterns = [
+    path('upload/', views.upload, name='upload'),
+    path('<slug:unique_key>/', views.detail, name='detail'),
+]

@@ -1,30 +1,38 @@
-from base import *  # noqa
+from .base import *  # noqa
 
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'debug': True,
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.static',
+            ],
+        },
+    },
+]
 
 INSTALLED_APPS += (
     'debug_toolbar',
 )
 
-MIDDLEWARE_CLASSES += (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
+INTERNAL_IPS = ('127.0.0.1',)
+
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
+MIDDLEWARE = ('debug_toolbar.middleware.DebugToolbarMiddleware',) + MIDDLEWARE
 
 DEBUG_TOOLBAR_CONFIG = {
-    "INTERCEPT_REDIRECTS": False
+    'DISABLE_PANELS': {
+        'debug_toolbar.panels.templates.TemplatesPanel',
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+    },
 }
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.request',
-)

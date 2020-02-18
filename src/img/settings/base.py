@@ -34,7 +34,6 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'pipeline',
     'widget_tweaks',
-    'south',
 )
 
 LOCAL_APPS = (
@@ -44,8 +43,7 @@ LOCAL_APPS = (
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-MIDDLEWARE_CLASSES = (
-    'pipeline.middleware.MinifyHTMLMiddleware',
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -95,49 +93,58 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = PUBLIC_ROOT.child('media')
 MEDIA_URL = '/media/'
 
-TEMPLATE_DIRS = (
-    DJANGO_ROOT.child('templates'),
-)
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.tz',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.request',
-)
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [DJANGO_ROOT.child('templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'debug': False,
+            'context_processors': [
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.media',
+                'django.core.context_processors.static',
+                'django.core.context_processors.request',
+            ],
+        },
+    },
+]
 
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
-PIPELINE_CSS = {
-    'base': {
-        'source_filenames': (
-            'css/bootstrap.css',
-            'css/project.css',
-        ),
-        'output_filename': 'css/base.css',
+PIPELINE = {
+    # 'JS_COMPRESSOR': None
+    'STYLESHEETS': {
+        'base': {
+            'source_filenames': (
+                'css/bootstrap.css',
+                'css/project.css',
+            ),
+            'output_filename': 'css/base.css',
+        },
     },
+    'JAVASCRIPT': {
+        'base': {
+            'source_filenames': (
+                'js/jquery.js',
+                'js/bootstrap.js',
+            ),
+            'output_filename': 'js/base.js',
+        },
+        'meme': {
+            'source_filenames': (
+                'js/meme.js',
+            ),
+            'output_filename': 'js/meme.js',
+        },
+    }
 }
-
-PIPELINE_JS = {
-    'base': {
-        'source_filenames': (
-            'js/jquery.js',
-            'js/bootstrap.js',
-        ),
-        'output_filename': 'js/base.js',
-    },
-    'meme': {
-        'source_filenames': (
-            'js/meme.js',
-        ),
-        'output_filename': 'js/meme.js',
-    },
-}
-
-PIPELINE_JS_COMPRESSOR = None
 
 LOGGING = {
     'version': 1,

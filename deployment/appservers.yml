@@ -1,0 +1,6 @@
+---
+- name: Configure all application servers
+  hosts: img
+  roles:
+    - { role: common }
+    - { role: appservers }

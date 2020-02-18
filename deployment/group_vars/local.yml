@@ -1,0 +1,8 @@
+project_domain: img.local
+project_version: master
+cert_path: "/etc/letsencrypt/live/{{ project_domain }}"
+django_settings: core.settings.local
+project_env: local
+env_file: .env.local
+env_target: ".env.local"
+gunicorn_options: "--reload"
