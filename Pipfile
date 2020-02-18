@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 django-debug-toolbar = "*"
+ansible = "*"
 
 [packages]
 django-annoying = "*"

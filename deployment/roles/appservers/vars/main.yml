@@ -1,6 +1,6 @@
 project_name: img
 user_name: img
-project_repo: git@git.miximum.fr:thibault/imghost.git
+project_repo: git@github.com:thibault/imghost.git
 install_root: /home/img
 project_root: "{{ install_root }}/{{ project_name }}"
 django_root: "{{ project_root }}/src"
