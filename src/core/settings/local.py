@@ -1,6 +1,15 @@
+import environ
 from .base import *  # noqa
 
 DEBUG = True
+
+# Create a .env.production file in django's root
+environ.Env.read_env('.env.local')
+env = environ.Env()
+
+DATABASES = {
+    'default': env.db(default='psql://img:img@localhost/img')
+}
 
 TEMPLATES = [
     {
