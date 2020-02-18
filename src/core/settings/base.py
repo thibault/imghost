@@ -52,9 +52,9 @@ MIDDLEWARE = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'img.urls'
+ROOT_URLCONF = 'core.urls'
 
-WSGI_APPLICATION = 'img.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
