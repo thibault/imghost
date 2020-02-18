@@ -17,6 +17,7 @@ Django = "<3"
 Pillow = "*"
 Unipath = "*"
 django-environ = "*"
+raven = "*"
 
 [requires]
 python_version = "3.7"
