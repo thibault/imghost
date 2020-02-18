@@ -79,6 +79,12 @@ STATICFILES_DIRS = (
     DJANGO_ROOT.child('static'),
 )
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.PipelineFinder',
+)
+
 MEDIA_ROOT = PUBLIC_ROOT.child('media')
 MEDIA_URL = '/media/'
 
@@ -108,7 +114,8 @@ TEMPLATES = [
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 PIPELINE = {
-    # 'JS_COMPRESSOR': None
+    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
+    'CSS_COMPRESSOR': 'pipeline.compressors.cssmin.CSSMinCompressor',
     'STYLESHEETS': {
         'base': {
             'source_filenames': (
