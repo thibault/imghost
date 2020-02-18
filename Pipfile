@@ -18,6 +18,7 @@ Pillow = "*"
 Unipath = "*"
 django-environ = "*"
 raven = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"
