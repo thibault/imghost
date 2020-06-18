@@ -23,12 +23,17 @@ ALLOWED_HOSTS = []
 
 
 DJANGO_APPS = (
+    'django.forms',  # This is needed because of the custom form renderer
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    'django.contrib.sitemaps',
 )
 
 THIRD_PARTY_APPS = (
