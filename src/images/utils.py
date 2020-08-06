@@ -1,6 +1,6 @@
 from os.path import splitext
 import requests
-from io import StringIO
+from io import StringIO, BytesIO
 from os.path import basename
 from PIL import Image, ImageOps
 
@@ -10,7 +10,7 @@ from django.core.files.images import ImageFile
 def download_image(url):
     r = requests.get(url)
     name = basename(url)
-    img_temp = StringIO(r.content)
+    img_temp = BytesIO(r.content)
     image = ImageFile(img_temp, name=name)
 
     return image
@@ -29,6 +29,6 @@ def create_thumb(image, size):
     else:
         thumbnail.thumbnail((size, size), Image.ANTIALIAS)
 
-    tmp_file = StringIO()
+    tmp_file = BytesIO()
     thumbnail.save(tmp_file, ext, optimize=True)
     return ImageFile(tmp_file)

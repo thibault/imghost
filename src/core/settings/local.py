@@ -45,3 +45,5 @@ DEBUG_TOOLBAR_CONFIG = {
         'debug_toolbar.panels.redirects.RedirectsPanel',
     },
 }
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
